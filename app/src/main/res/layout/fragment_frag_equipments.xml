@@ -1,0 +1,21 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    tools:context=".FragEquipments">
+
+    <GridView
+        android:id="@+id/grid_consumables"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:columnWidth="75dp"
+        android:numColumns="5"
+        android:horizontalSpacing="5dp"
+        android:verticalSpacing="5dp"
+        android:stretchMode="columnWidth">
+    </GridView>
+
+</LinearLayout>

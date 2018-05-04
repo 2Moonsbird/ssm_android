@@ -1,0 +1,7 @@
+#Fri May 04 11:19:58 CST 2018
+base.0=/home/xd/AndroidStudioProjects/ssm/app/build/intermediates/transforms/dexMerger/debug/57
+path.1=classes.dex
+renamed.1=classes2.dex
+path.0=classes.dex
+renamed.0=classes.dex
+base.1=/home/xd/AndroidStudioProjects/ssm/app/build/intermediates/transforms/dexMerger/debug/58

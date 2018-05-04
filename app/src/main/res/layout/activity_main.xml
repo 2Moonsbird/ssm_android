@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@mipmap/ic_launcher"
+    tools:context="com.ssm.xd.ssm.MainActivity">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <Button
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="返回" />
+        <TextView
+            android:id="@+id/textViewPackage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="背包"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:background="@color/material_blue_grey_800"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+        <Button
+            android:id="@+id/reOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="重新排序" />
+    </LinearLayout>
+
+    <include layout="@layout/package_top"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/package_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp">
+    </android.support.v4.view.ViewPager>
+
+</LinearLayout>
