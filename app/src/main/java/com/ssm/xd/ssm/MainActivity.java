@@ -24,7 +24,7 @@ import android.os.Handler;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends FragmentActivity implements OnClickListener {
+public class MainActivity extends FragmentActivity implements OnClickListener{
     //声明三个布局文件
     private LinearLayout tabEquipments;
     private LinearLayout tabConsumables;
@@ -42,7 +42,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
     private List<Fragment> fragments;
 
-
+    int user_id=0;
     //data
     private ArrayList<Goods> g_consumables=new ArrayList<>();
     private  ArrayList<Goods> g_pieces=new ArrayList<>();
@@ -57,11 +57,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
         public void handleMessage(Message msg){
             super.handleMessage(msg);
             if(msg.what == 1){
-                initViews();
-                initEvents();
                 initFragments();
                 initAdapter();
-                selectTab(0);//默认打开页面
             }
 //            else if(msg.what == 2){
 //
@@ -77,12 +74,16 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
         setContentView(R.layout.activity_main);
         intent=getIntent();
 
-        //通过Handeler控制，先初始化数据再初始化界面
+        //通过Handeler控制，先初始化数据再初始化fragment
         initData();
+        initViews();
+        initEvents();
+
+        selectTab(0);//默认打开页面
     }
 
     //JSONArray转ArrayList<Package>
-    private static ArrayList<Package> JSONArraytoPackageList(JSONArray array){
+    public static ArrayList<Package> JSONArraytoPackageList(JSONArray array){
         ArrayList<Package> list = new ArrayList<>();
         JSONObject jsonObject;
 
@@ -108,7 +109,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
     }
 
     //JSONArray转ArrayList<Goods>
-    private static ArrayList<Goods> JSONArraytoGoodsList(JSONArray array){
+    public static ArrayList<Goods> JSONArraytoGoodsList(JSONArray array){
         ArrayList<Goods> list = new ArrayList<>();
         JSONObject jsonObject;
 
@@ -143,7 +144,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
                 Message msg=new Message();
                 PackageNetModel model=new PackageNetModel();
                 try {
-                    JSONObject json=model.getIndexJSON(1,serverConfiguration.indexURL);
+                    JSONObject json=model.getIndexJSON(user_id,serverConfiguration.indexURL);
 
                     p_consumables=(ArrayList<Package>) JSONArraytoPackageList(json.getJSONArray("p_consumables"));
                     p_equipments=(ArrayList<Package>) JSONArraytoPackageList(json.getJSONArray("p_equipments"));
@@ -192,7 +193,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
     private void initFragments(){
         fragments=new ArrayList<>();
 
-        fragments.add(FragConsumables.newInstance(p_consumables,g_consumables));
+        fragments.add(FragConsumables.newInstance(p_consumables,g_consumables,user_id));
         fragments.add(FragEquipments.newInstance(p_equipments,g_equipments));
         fragments.add(FragEquipments.newInstance(p_pieces,g_pieces));
     }

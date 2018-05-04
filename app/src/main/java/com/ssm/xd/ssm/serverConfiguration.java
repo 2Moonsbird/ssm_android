@@ -5,7 +5,7 @@ package com.ssm.xd.ssm;
  */
 
 public class serverConfiguration {
-    public static final String IP = "10.170.49.143";  //本地地址
+    public static final String IP = "10.170.14.166";  //本地地址
     public static final int PORT = 8080;
     public static final String indexURL="maven-ssm/package/index.json";
     public static final String reOrderURL="maven-ssm/package/reOrder";

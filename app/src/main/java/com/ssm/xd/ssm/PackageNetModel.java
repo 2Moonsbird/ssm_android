@@ -27,7 +27,6 @@ public class PackageNetModel {
         JSONObject json = null;
         HttpClient httpClient = new DefaultHttpClient();
         List<NameValuePair> qparams = new ArrayList<>();
-        //qparams.add(new BasicNameValuePair("method", "getDetail"));
 
         qparams.add(new BasicNameValuePair("user_id", String.valueOf(user_id)));
 
@@ -35,11 +34,12 @@ public class PackageNetModel {
         try{
             URI uri = URIUtils.createURI("http", serverConfiguration.IP,
                     serverConfiguration.PORT,
-                    url,null,null);
-                    //URLEncodedUtils.format(qparams, "UTF-8"),
+                    url,
+                    URLEncodedUtils.format(qparams, "UTF-8"),
+                    null);
 
             HttpGet httpget = new HttpGet(uri);
-            //HttpPost httpget=new HttpPost(uri);
+            //HttpPost httppost=new HttpPost(uri);
 
             HttpResponse response = httpClient.execute(httpget);
 
@@ -52,6 +52,49 @@ public class PackageNetModel {
                 String contentString = EntityUtils.toString(entity);
                 Log.i("tag", contentString);
                 json = new JSONObject(contentString);
+                System.out.println("JSON -- p_consumables  "+json.getJSONArray("p_consumables").toString());
+            }
+        }catch (Exception e){
+            Log.i("Exception",e.toString());
+        }
+
+        httpClient.getConnectionManager().shutdown();
+        return json;
+    }
+    public JSONObject applyJSON(int user_id,int record_id,String url) {
+        JSONObject json = null;
+        HttpClient httpClient = new DefaultHttpClient();
+        List<NameValuePair> qparams = new ArrayList<>();
+
+        qparams.add(new BasicNameValuePair("user_id", String.valueOf(user_id)));
+        qparams.add(new BasicNameValuePair("record_id",String.valueOf(record_id)));
+
+        try{
+            URI uri = URIUtils.createURI("http", serverConfiguration.IP,
+                    serverConfiguration.PORT,
+                    url,
+                    URLEncodedUtils.format(qparams, "UTF-8"),
+                    null);
+
+            System.out.println("uri:"+uri.toString());
+
+            HttpGet httpget = new HttpGet(uri);
+            System.out.println("httpget done");
+
+            HttpResponse response = httpClient.execute(httpget);
+
+            System.out.println("httResponse done");
+            HttpEntity entity = response.getEntity();
+
+            System.out.println("httpentity done");
+            Log.i("tag", "uri:"+uri.toString());
+
+            if (entity != null)
+            {
+                String contentString = EntityUtils.toString(entity);
+                Log.i("tag", contentString);
+                json = new JSONObject(contentString);
+                System.out.println("JSON -- p_consumables  "+json.getJSONArray("p_consumables").toString());
             }
         }catch (Exception e){
             Log.i("Exception",e.toString());

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class FragConsumables extends Fragment implements OnItemClickListener {
@@ -22,14 +25,17 @@ public class FragConsumables extends Fragment implements OnItemClickListener {
     private GridConsumablesAdapter adapter;
     private GridView gridView;
     private View view;
+    int user_id;
+    int position;
     private ArrayList<Package> records=new ArrayList<>();
     private ArrayList<Goods> goods=new ArrayList<>();
 
-    public static FragConsumables newInstance(ArrayList<Package> consumables, ArrayList<Goods> goods) {
+    public static FragConsumables newInstance(ArrayList<Package> consumables, ArrayList<Goods> goods,int user_id) {
         FragConsumables fragConsumables = new FragConsumables();
         Bundle bundle = new Bundle();
         bundle.putSerializable("records",consumables);
         bundle.putSerializable("goods",goods);
+        bundle.putInt("user_id",user_id);
         fragConsumables.setArguments(bundle);
         return fragConsumables;
     }
@@ -41,6 +47,7 @@ public class FragConsumables extends Fragment implements OnItemClickListener {
         super.onCreate(savedInstanceState);
         this.records=(ArrayList<Package>) this.getArguments().getSerializable("records");
         this.goods=(ArrayList<Goods>) this.getArguments().getSerializable("goods");
+        this.user_id=this.getArguments().getInt("user_id");
     }
 
     // 消息提示框
@@ -57,7 +64,22 @@ public class FragConsumables extends Fragment implements OnItemClickListener {
                 .setPositiveButton("使用", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //do something
+                        System.out.println("apply");
+                        new Thread(){
+                            public void run(){
+                                //do something
+                                try{
+                                    PackageNetModel model=new PackageNetModel();
+                                    JSONObject json=model.applyJSON(user_id,position,serverConfiguration.indexURL);
+                                    records=(ArrayList<Package>) MainActivity.JSONArraytoPackageList(json.getJSONArray("p_consumables"));
+                                    goods=(ArrayList<Goods>) MainActivity.JSONArraytoGoodsList(json.getJSONArray("g_consumables"));
+                                    gridView.setAdapter(new GridConsumablesAdapter(getContext(),records,goods));
+                                }catch (Exception e){
+                                    Log.i("apply ERROR",e.toString());
+                                }
+                            }
+                        }.start();
+
                         dialog.dismiss();
                     }
                 })
@@ -72,7 +94,7 @@ public class FragConsumables extends Fragment implements OnItemClickListener {
         String message=new String();
         message=message+"使用时长："+goods.get(position).getGoodsAttr()+"\n";
         message=message+"详细介绍:"+goods.get(position).getGoodsIntro()+"\n";
-
+        this.position=position;
         showConsumablesDialog(goods.get(position).getGoodsName(),message);
     }
 
