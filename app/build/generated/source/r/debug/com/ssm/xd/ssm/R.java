@@ -3780,10 +3780,10 @@ public final class R {
     public static final int ghost_view=0x7f08004f;
     public static final int gone=0x7f080050;
     public static final int grid_consumables=0x7f080051;
-    public static final int grid_consumables_item=0x7f080052;
-    public static final int grid_consumables_item_img=0x7f080053;
-    public static final int grid_consumables_item_name=0x7f080054;
-    public static final int grid_consumables_item_num=0x7f080055;
+    public static final int grid_item=0x7f080052;
+    public static final int grid_item_img=0x7f080053;
+    public static final int grid_item_name=0x7f080054;
+    public static final int grid_item_num=0x7f080055;
     public static final int home=0x7f080056;
     public static final int homeAsUp=0x7f080057;
     public static final int icon=0x7f080058;
@@ -3966,7 +3966,7 @@ public final class R {
     public static final int fragment_frag_consumables=0x7f0a002a;
     public static final int fragment_frag_equipments=0x7f0a002b;
     public static final int fragment_frag_pieces=0x7f0a002c;
-    public static final int grid_consumables_item=0x7f0a002d;
+    public static final int grid_item=0x7f0a002d;
     public static final int notification_action=0x7f0a002e;
     public static final int notification_action_tombstone=0x7f0a002f;
     public static final int notification_media_action=0x7f0a0030;

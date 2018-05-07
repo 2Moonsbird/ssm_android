@@ -10,12 +10,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class GridConsumablesAdapter extends BaseAdapter {
+public class GridAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<Package> records;
     private ArrayList<Goods> goods;
 
-    public GridConsumablesAdapter(Context context,ArrayList<Package> records,ArrayList<Goods> goods){
+    public GridAdapter(Context context, ArrayList<Package> records, ArrayList<Goods> goods){
         super();
         this.records=records;
         this.goods=goods;
@@ -40,11 +40,11 @@ public class GridConsumablesAdapter extends BaseAdapter {
     @Override public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if(convertView == null){
-            convertView = LayoutInflater.from(context).inflate(R.layout.grid_consumables_item, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.grid_item, parent, false);
             holder = new ViewHolder();
-            holder.img = (ImageView) convertView.findViewById(R.id.grid_consumables_item_img);
-            holder.txt_name=(TextView) convertView.findViewById(R.id.grid_consumables_item_name);
-            holder.txt_num = (TextView) convertView.findViewById(R.id.grid_consumables_item_num);
+            holder.img = (ImageView) convertView.findViewById(R.id.grid_item_img);
+            holder.txt_name=(TextView) convertView.findViewById(R.id.grid_item_name);
+            holder.txt_num = (TextView) convertView.findViewById(R.id.grid_item_num);
             convertView.setTag(holder);
         }
         else{

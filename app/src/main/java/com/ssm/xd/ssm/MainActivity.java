@@ -1,5 +1,6 @@
 package com.ssm.xd.ssm;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Message;
 import android.support.v4.app.Fragment;
@@ -9,10 +10,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
@@ -35,6 +38,10 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
     private ImageButton buttonConsumables;
     private ImageButton buttonPieces;
 
+    //声明重新排序和返回按键
+    private Button buttonBack;
+    private Button buttonreOrder;
+
     private Intent intent;
     private ViewPager viewPager;
     //Fragment适配器
@@ -56,14 +63,15 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
         @Override
         public void handleMessage(Message msg){
             super.handleMessage(msg);
-            if(msg.what == 1){
-                initFragments();
-                initAdapter();
+            switch (msg.what){
+                case 1:
+                    initFragments();
+                    initAdapter();
+                    break;
+                case 2:
+                default:
+                    break;
             }
-//            else if(msg.what == 2){
-//
-//            }
-
         }
     };
 
@@ -144,6 +152,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
                 Message msg=new Message();
                 PackageNetModel model=new PackageNetModel();
                 try {
+                    //这个方法中包含对HttpResponse的初始化必须在线程中进行
                     JSONObject json=model.getIndexJSON(user_id,serverConfiguration.indexURL);
 
                     p_consumables=(ArrayList<Package>) JSONArraytoPackageList(json.getJSONArray("p_consumables"));
@@ -173,6 +182,9 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
         buttonEquipments=(ImageButton)findViewById(R.id.tab_equipments_but);
         buttonPieces=(ImageButton)findViewById(R.id.tab_pieces_but);
 
+        buttonBack=(Button)findViewById(R.id.back);
+        buttonreOrder=(Button)findViewById(R.id.reOrder);
+
         viewPager=(ViewPager)findViewById(R.id.package_viewpager);
     }
 
@@ -181,6 +193,9 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
         tabConsumables.setOnClickListener(this);
         tabEquipments.setOnClickListener(this);
         tabPieces.setOnClickListener(this);
+
+        buttonBack.setOnClickListener(this);
+        buttonreOrder.setOnClickListener(this);
     }
 
     //初始化按钮，将3个ImageButton置为灰色
@@ -194,8 +209,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
         fragments=new ArrayList<>();
 
         fragments.add(FragConsumables.newInstance(p_consumables,g_consumables,user_id));
-        fragments.add(FragEquipments.newInstance(p_equipments,g_equipments));
-        fragments.add(FragEquipments.newInstance(p_pieces,g_pieces));
+        fragments.add(FragEquipments.newInstance(p_equipments,g_equipments,user_id));
+        fragments.add(FragPieces.newInstance(p_pieces,g_pieces,user_id));
     }
 
     //初始化适配器
@@ -261,7 +276,67 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
         viewPager.setCurrentItem(i);
     }
 
-    //处理Tab的点击事件
+    private void back(){
+        AlertDialog alertDialog=new AlertDialog.Builder(MainActivity.this)
+                .setTitle("返回")
+                .setMessage("当前已是最上层，是否退出应用？")
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("退出", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .create();
+        alertDialog.show();
+    }
+
+    //刷新fragments
+    private void reFresh(){
+        FragConsumables fragConsumables=(FragConsumables)fragments.get(0);
+        fragConsumables.reset(p_consumables,g_consumables);
+
+        FragEquipments fragEquipments=(FragEquipments)fragments.get(1);
+        fragEquipments.reset(p_equipments,g_equipments);
+
+        FragPieces fragPieces=(FragPieces) fragments.get(2);
+        fragPieces.reset(p_pieces,g_pieces);
+    }
+    private void reOrder(){
+        new Thread(){
+            public void run(){
+                //intent = getIntent();
+                //userId = Integer.parseInt(intent.getStringExtra("user_id"));
+                Message msg=new Message();
+                PackageNetModel model=new PackageNetModel();
+                try {
+                    //这个方法中包含对HttpResponse的初始化必须在线程中进行
+                    JSONObject json=model.reOrderJSON(user_id,serverConfiguration.reOrderURL);
+
+                    p_consumables=(ArrayList<Package>) JSONArraytoPackageList(json.getJSONArray("p_consumables"));
+                    p_equipments=(ArrayList<Package>) JSONArraytoPackageList(json.getJSONArray("p_equipments"));
+                    p_pieces=(ArrayList<Package>) JSONArraytoPackageList(json.getJSONArray("p_pieces"));
+                    g_consumables=(ArrayList<Goods>) JSONArraytoGoodsList(json.getJSONArray("g_consumables"));
+                    g_equipments=(ArrayList<Goods>) JSONArraytoGoodsList(json.getJSONArray("g_equipments"));
+                    g_pieces=(ArrayList<Goods>) JSONArraytoGoodsList(json.getJSONArray("g_pieces"));
+
+                }catch (Exception e){
+                    Log.i("Exception",e.toString());
+                }
+            }
+        }.start();
+
+        Message msg=new Message();
+        msg.what=2;
+        progressHandler.sendMessage(msg);
+
+    }
+    //处理点击事件
     @Override
     public void onClick(View v) {
         //先将3个ImageButton置为灰色
@@ -276,6 +351,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
                 break;
             case R.id.tab_pieces:
                 selectTab(2);
+                break;
+            case R.id.back:
+                back();
+                break;
+            case R.id.reOrder:
                 break;
             default:
                 break;

@@ -1,7 +1,10 @@
 package com.ssm.xd.ssm;
 
+import android.app.ActivityManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -11,10 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageView;
 
 import org.json.JSONObject;
 
@@ -22,11 +22,12 @@ import java.util.ArrayList;
 
 public class FragConsumables extends Fragment implements OnItemClickListener {
 
-    private GridConsumablesAdapter adapter;
+    private GridAdapter adapter;
     private GridView gridView;
     private View view;
     int user_id;
     int position;
+    private Handler progressHandler=null;
     private ArrayList<Package> records=new ArrayList<>();
     private ArrayList<Goods> goods=new ArrayList<>();
 
@@ -48,6 +49,19 @@ public class FragConsumables extends Fragment implements OnItemClickListener {
         this.records=(ArrayList<Package>) this.getArguments().getSerializable("records");
         this.goods=(ArrayList<Goods>) this.getArguments().getSerializable("goods");
         this.user_id=this.getArguments().getInt("user_id");
+
+        progressHandler = new Handler(){
+            @Override
+            public void handleMessage(Message msg){
+                switch (msg.what){
+                    case 1:
+                        reFresh();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
     }
 
     // 消息提示框
@@ -64,16 +78,21 @@ public class FragConsumables extends Fragment implements OnItemClickListener {
                 .setPositiveButton("使用", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        System.out.println("apply");
                         new Thread(){
                             public void run(){
                                 //do something
                                 try{
                                     PackageNetModel model=new PackageNetModel();
-                                    JSONObject json=model.applyJSON(user_id,position,serverConfiguration.indexURL);
+                                    //这个方法中包含对HttpResponse的初始化必须在线程中进行
+                                    JSONObject json=model.applyJSON(user_id,position,serverConfiguration.applyURL);
+
                                     records=(ArrayList<Package>) MainActivity.JSONArraytoPackageList(json.getJSONArray("p_consumables"));
                                     goods=(ArrayList<Goods>) MainActivity.JSONArraytoGoodsList(json.getJSONArray("g_consumables"));
-                                    gridView.setAdapter(new GridConsumablesAdapter(getContext(),records,goods));
+
+                                    Message msg=new Message();
+                                    msg.what=1;
+                                    progressHandler.handleMessage(msg);
+
                                 }catch (Exception e){
                                     Log.i("apply ERROR",e.toString());
                                 }
@@ -90,7 +109,6 @@ public class FragConsumables extends Fragment implements OnItemClickListener {
     @Override
     public void onItemClick (AdapterView<?> parent, View view,int position, long id){
         //点击item触发
-        System.out.println("clicked consumables");
         String message=new String();
         message=message+"使用时长："+goods.get(position).getGoodsAttr()+"\n";
         message=message+"详细介绍:"+goods.get(position).getGoodsIntro()+"\n";
@@ -103,8 +121,28 @@ public class FragConsumables extends Fragment implements OnItemClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_frag_consumables, container, false);
         gridView = (GridView) view.findViewById(R.id.grid_consumables);
-        gridView.setAdapter(new GridConsumablesAdapter(getContext(),records,goods));
+        gridView.setAdapter(adapter=new GridAdapter(getContext(),records,goods));
         gridView.setOnItemClickListener(this);
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    private void reFresh() {
+        this.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    public void reset(ArrayList<Package> consumables, ArrayList<Goods> goods) {
+        this.records=consumables;
+        this.goods=goods;
+        reFresh();
     }
 }

@@ -5,10 +5,11 @@ package com.ssm.xd.ssm;
  */
 
 public class serverConfiguration {
-    public static final String IP = "10.170.14.166";  //本地地址
+    public static final String IP = "10.170.58.185";  //本地地址
     public static final int PORT = 8080;
     public static final String indexURL="maven-ssm/package/index.json";
-    public static final String reOrderURL="maven-ssm/package/reOrder";
-    public static final String pieceURL="maven-ssm/package/pieceTogether";
-    public static final String applyURL="maven-ssm/package/apply";
+    public static final String reOrderURL="maven-ssm/package/reOrder.json";
+    public static final String pieceTogetherURL="maven-ssm/package/pieceTogether.json";
+    public static final String applyURL="maven-ssm/package/apply.json";
+    public static final String equipURL="maven-ssm/package/equip.json";
 }
