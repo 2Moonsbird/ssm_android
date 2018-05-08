@@ -29,10 +29,10 @@ public class FragEquipments extends Fragment  implements OnItemClickListener {
     private ArrayList<Package> records=new ArrayList<>();
     private ArrayList<Goods> goods=new ArrayList<>();
 
-    public static FragEquipments newInstance(ArrayList<Package> consumables, ArrayList<Goods> goods,int user_id) {
+    public static FragEquipments newInstance(ArrayList<Package> equipments, ArrayList<Goods> goods,int user_id) {
         FragEquipments fragEquipments = new FragEquipments();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("records",consumables);
+        bundle.putSerializable("records",equipments);
         bundle.putSerializable("goods",goods);
         bundle.putInt("user_id",user_id);
         fragEquipments.setArguments(bundle);
@@ -51,7 +51,7 @@ public class FragEquipments extends Fragment  implements OnItemClickListener {
         progressHandler = new Handler(){
             @Override
             public void handleMessage(Message msg){
-                switch (msg.what){
+                switch(msg.what){
                     case 1:
                         reFresh();
                         break;
@@ -63,7 +63,7 @@ public class FragEquipments extends Fragment  implements OnItemClickListener {
     }
 
     // 消息提示框
-    private void showConsumablesDialog(String title,String message) {
+    private void showEquipmentsDialog(String title,String message) {
         AlertDialog alertDialog=new AlertDialog.Builder(this.getContext())
                 .setTitle(title)
                 .setMessage(message)
@@ -83,6 +83,7 @@ public class FragEquipments extends Fragment  implements OnItemClickListener {
                                     PackageNetModel model=new PackageNetModel();
                                     //这个方法中包含对HttpResponse的初始化必须在线程中进行
                                     JSONObject json=model.equipJSON(user_id,position,serverConfiguration.equipURL);
+
                                     records=(ArrayList<Package>) MainActivity.JSONArraytoPackageList(json.getJSONArray("p_equipments"));
                                     goods=(ArrayList<Goods>) MainActivity.JSONArraytoGoodsList(json.getJSONArray("g_equipments"));
 
@@ -104,28 +105,24 @@ public class FragEquipments extends Fragment  implements OnItemClickListener {
     }
 
     @Override
-    public void onItemClick (AdapterView<?> parent, View view, int position, long id){
+    public void onItemClick (AdapterView<?> parent, View view,int position, long id){
         //点击item触发
         String message=new String();
         message=message+"使用时长："+goods.get(position).getGoodsAttr()+"\n";
         message=message+"详细介绍:"+goods.get(position).getGoodsIntro()+"\n";
+        message=message+"package :" +records.get(position).toString()+goods.get(position).toString();
         this.position=position;
-        showConsumablesDialog(goods.get(position).getGoodsName(),message);
+        showEquipmentsDialog(goods.get(position).getGoodsName(),message);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_frag_equipments, container, false);
-        gridView = (GridView) view.findViewById(R.id.grid_consumables);
+        view = inflater.inflate(R.layout.fragment_package, container, false);
+        gridView = (GridView) view.findViewById(R.id.grid_package);
         gridView.setAdapter(adapter=new GridAdapter(getContext(),records,goods));
         gridView.setOnItemClickListener(this);
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     private void reFresh() {

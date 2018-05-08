@@ -1,6 +1,5 @@
 package com.ssm.xd.ssm;
 
-import android.app.ActivityManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,7 +20,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class FragConsumables extends Fragment implements OnItemClickListener {
-
     private GridAdapter adapter;
     private GridView gridView;
     private View view;
@@ -112,6 +110,7 @@ public class FragConsumables extends Fragment implements OnItemClickListener {
         String message=new String();
         message=message+"使用时长："+goods.get(position).getGoodsAttr()+"\n";
         message=message+"详细介绍:"+goods.get(position).getGoodsIntro()+"\n";
+        message=message+"package :" +records.get(position).toString()+goods.get(position).toString();
         this.position=position;
         showConsumablesDialog(goods.get(position).getGoodsName(),message);
     }
@@ -119,16 +118,11 @@ public class FragConsumables extends Fragment implements OnItemClickListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_frag_consumables, container, false);
-        gridView = (GridView) view.findViewById(R.id.grid_consumables);
+        view = inflater.inflate(R.layout.fragment_package, container, false);
+        gridView = (GridView) view.findViewById(R.id.grid_package);
         gridView.setAdapter(adapter=new GridAdapter(getContext(),records,goods));
         gridView.setOnItemClickListener(this);
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     private void reFresh() {
@@ -142,6 +136,7 @@ public class FragConsumables extends Fragment implements OnItemClickListener {
 
     public void reset(ArrayList<Package> consumables, ArrayList<Goods> goods) {
         this.records=consumables;
+        System.out.println("reset done :"+records);
         this.goods=goods;
         reFresh();
     }

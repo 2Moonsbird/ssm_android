@@ -1,6 +1,5 @@
 package com.ssm.xd.ssm;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,32 +25,32 @@ public class FragPieces extends Fragment  implements OnItemClickListener {
     private View view;
     int user_id;
     int position;
-    private Handler progressHandler=null;
-    private ArrayList<Package> records=new ArrayList<>();
-    private ArrayList<Goods> goods=new ArrayList<>();
+    private Handler progressHandler = null;
+    private ArrayList<Package> records = new ArrayList<>();
+    private ArrayList<Goods> goods = new ArrayList<>();
 
-    public static FragPieces newInstance(ArrayList<Package> pieces, ArrayList<Goods> goods,int user_id) {
+    public static FragPieces newInstance(ArrayList<Package> pieces, ArrayList<Goods> goods, int user_id) {
         FragPieces fragPieces = new FragPieces();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("records",pieces);
-        bundle.putSerializable("goods",goods);
-        bundle.putInt("user_id",user_id);
+        bundle.putSerializable("records", pieces);
+        bundle.putSerializable("goods", goods);
+        bundle.putInt("user_id", user_id);
         fragPieces.setArguments(bundle);
         return fragPieces;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        this.records=(ArrayList<Package>) this.getArguments().getSerializable("records");
-        this.goods=(ArrayList<Goods>) this.getArguments().getSerializable("goods");
-        this.user_id=this.getArguments().getInt("user_id");
+        this.records = (ArrayList<Package>) this.getArguments().getSerializable("records");
+        this.goods = (ArrayList<Goods>) this.getArguments().getSerializable("goods");
+        this.user_id = this.getArguments().getInt("user_id");
 
-        progressHandler = new Handler(){
+        progressHandler = new Handler() {
             @Override
-            public void handleMessage(Message msg){
-                switch (msg.what){
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
                     case 1:
                         reFresh();
                         break;
@@ -63,94 +62,79 @@ public class FragPieces extends Fragment  implements OnItemClickListener {
     }
 
     // 消息提示框
-    private void showPiecesDialog(String title,String message) {
+    private void showPiecesDialog(String title, String message) {
 
-            AlertDialog alertDialog=new AlertDialog.Builder(this.getContext())
-                    .setTitle(title)
-                    .setMessage(message)
-                    .setNegativeButton("关闭", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+        AlertDialog alertDialog = new AlertDialog.Builder(this.getContext())
+                .setTitle(title)
+                .setMessage(message)
+                .setNegativeButton("关闭", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("合成", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (records.get(position).getGoodsNum() < goods.get(position).getGoodsAttr()) {
+                            lackWarning();
                             dialog.dismiss();
+                            return;
+
                         }
-                    })
-                    .setPositiveButton("合成", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if(records.get(position).getGoodsNum()<goods.get(position).getGoodsAttr())
-                            {
-                                lackWarning();
-                                dialog.dismiss();
-                                return;
+                        new Thread() {
+                            public void run() {
+                                //do something
+                                try {
+                                    PackageNetModel model = new PackageNetModel();
 
-                            }
-                            new Thread(){
-                                public void run(){
-                                    //do something
-                                    try{
-                                        PackageNetModel model=new PackageNetModel();
+                                    //这个方法中包含对HttpResponse的初始化必须在线程中进行
+                                    JSONObject json = model.pieceTogetherJSON(user_id, position, serverConfiguration.pieceTogetherURL);
+                                    records = (ArrayList<Package>) MainActivity.JSONArraytoPackageList(json.getJSONArray("p_pieces"));
+                                    goods = (ArrayList<Goods>) MainActivity.JSONArraytoGoodsList(json.getJSONArray("g_pieces"));
 
-                                        //这个方法中包含对HttpResponse的初始化必须在线程中进行
-                                        JSONObject json=model.pieceTogetherJSON(user_id,position,serverConfiguration.pieceTogetherURL);
-                                        records=(ArrayList<Package>) MainActivity.JSONArraytoPackageList(json.getJSONArray("p_pieces"));
-                                        goods=(ArrayList<Goods>) MainActivity.JSONArraytoGoodsList(json.getJSONArray("g_pieces"));
+                                    Message msg = new Message();
+                                    msg.what = 1;
+                                    progressHandler.handleMessage(msg);
 
-                                        Message msg=new Message();
-                                        msg.what=1;
-                                        progressHandler.handleMessage(msg);
-
-                                    }catch (Exception e){
-                                        Log.i("pieceTogether ERROR",e.toString());
-                                    }
+                                } catch (Exception e) {
+                                    Log.i("pieceTogether ERROR", e.toString());
                                 }
-                            }.start();
+                            }
+                        }.start();
 
-                            dialog.dismiss();
-                        }
-                    })
-                    .create();
+                        dialog.dismiss();
+                    }
+                })
+                .create();
         alertDialog.show();
 
 
     }
 
     @Override
-    public void onItemClick (AdapterView<?> parent, View view, int position, long id){
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         //点击item触发
-        String message=new String();
-        message=message+"合成所需数量："+goods.get(position).getGoodsAttr()+"\n";
-        message=message+"详细介绍:"+goods.get(position).getGoodsIntro()+"\n";
-        this.position=position;
-        showPiecesDialog(goods.get(position).getGoodsName(),message);
+        String message = new String();
+        message = message + "合成所需数量：" + goods.get(position).getGoodsAttr() + "\n";
+        message = message + "详细介绍:" + goods.get(position).getGoodsIntro() + "\n";
+        message = message + "package :" + records.get(position).toString() + goods.get(position).toString();
+        this.position = position;
+        showPiecesDialog(goods.get(position).getGoodsName(), message);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_frag_pieces, container, false);
-        gridView = (GridView) view.findViewById(R.id.grid_consumables);
-        gridView.setAdapter(adapter=new GridAdapter(getContext(),records,goods));
+        view = inflater.inflate(R.layout.fragment_package, container, false);
+        gridView = (GridView) view.findViewById(R.id.grid_package);
+        gridView.setAdapter(adapter = new GridAdapter(getContext(), records, goods));
         gridView.setOnItemClickListener(this);
         return view;
     }
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    private void reFresh() {
-        this.getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                adapter.notifyDataSetChanged();
-            }
-        });
-    }
-
-    private void lackWarning(){
-        AlertDialog alertDialog=new AlertDialog.Builder(this.getContext())
+    private void lackWarning() {
+        AlertDialog alertDialog = new AlertDialog.Builder(this.getContext())
                 .setTitle("合成失败")
                 .setMessage("碎片数量不足")
                 .setNegativeButton("关闭", new DialogInterface.OnClickListener() {
@@ -163,9 +147,18 @@ public class FragPieces extends Fragment  implements OnItemClickListener {
         alertDialog.show();
     }
 
+    private void reFresh() {
+        this.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
     public void reset(ArrayList<Package> pieces, ArrayList<Goods> goods) {
-        this.records=pieces;
-        this.goods=goods;
+        this.records = pieces;
+        this.goods = goods;
         reFresh();
     }
 }

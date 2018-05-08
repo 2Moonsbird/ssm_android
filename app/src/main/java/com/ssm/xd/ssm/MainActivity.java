@@ -6,7 +6,9 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -45,19 +48,21 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
     private Intent intent;
     private ViewPager viewPager;
     //Fragment适配器
-    private FragmentPagerAdapter fragAdapter;
+    private MyFragmentPagerAdapter fragAdapter;
 
     private List<Fragment> fragments;
 
-    int user_id=0;
+    int user_id=0;//userMapper.getUser();
     //data
     private ArrayList<Goods> g_consumables=new ArrayList<>();
-    private  ArrayList<Goods> g_pieces=new ArrayList<>();
     private  ArrayList<Goods> g_equipments=new ArrayList<>();
+    private  ArrayList<Goods> g_pieces=new ArrayList<>();
 
     private  ArrayList<Package> p_consumables=new ArrayList<>();
-    private  ArrayList<Package> p_pieces=new ArrayList<>();
     private  ArrayList<Package> p_equipments=new ArrayList<>();
+    private  ArrayList<Package> p_pieces=new ArrayList<>();
+
+    boolean[] fragmentsUpdateFlag = {false, false, false};
 
     private Handler progressHandler = new Handler(){
         @Override
@@ -69,11 +74,73 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
                     initAdapter();
                     break;
                 case 2:
+                    reFresh();
                 default:
                     break;
             }
         }
     };
+
+
+    class MyFragmentPagerAdapter extends FragmentPagerAdapter {
+        FragmentManager fm;
+
+
+        MyFragmentPagerAdapter(FragmentManager fm) {
+            super(fm);
+            this.fm = fm;
+        }
+
+        @Override
+        public int getCount() {
+            return fragments.size();
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Fragment fragment = fragments.get(position % fragments.size());
+            Log.i("fragment replace", "getItem:position=" + position + ",fragment:"
+                    + fragment.getClass().getName() + ",fragment.tag="
+                    + fragment.getTag());
+            return fragments.get(position % fragments.size());
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+//得到缓存的fragment
+            Fragment fragment = (Fragment) super.instantiateItem(container,
+                    position);
+//得到tag，这点很重要
+            String fragmentTag = fragment.getTag();
+
+
+            if (fragmentsUpdateFlag[position % fragmentsUpdateFlag.length]) {
+//如果这个fragment需要更新
+
+                FragmentTransaction ft = fm.beginTransaction();
+//移除旧的fragment
+                ft.remove(fragment);
+//换成新的fragment
+                fragment = fragments.get(position % fragments.size());
+//添加新fragment时必须用前面获得的tag，这点很重要
+                ft.add(container.getId(), fragment, fragmentTag);
+                ft.attach(fragment);
+                ft.commit();
+
+//复位更新标志
+                fragmentsUpdateFlag[position % fragmentsUpdateFlag.length]= false;
+            }
+
+
+            return fragment;
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -200,9 +267,9 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
 
     //初始化按钮，将3个ImageButton置为灰色
     private void initButtons() {
-        buttonConsumables.setImageResource(R.mipmap.ic_launcher);
-        buttonEquipments.setImageResource(R.mipmap.ic_launcher);
-        buttonPieces.setImageResource(R.mipmap.ic_launcher);
+        buttonConsumables.setAlpha((float)0.5);
+        buttonEquipments.setAlpha((float)0.5);
+        buttonPieces.setAlpha((float)0.5);
     }
 
     private void initFragments(){
@@ -215,21 +282,23 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
 
     //初始化适配器
     private void initAdapter(){
-        fragAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                //从集合中获取对应位置的Fragment
-                return fragments.get(position);
-            }
-
-            @Override
-            public int getCount() {
-                //获取集合中Fragment的总数
-                return fragments.size();
-
-            }
-
-        };
+        fragAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
+//                (getSupportFragmentManager()) {
+//            @Override
+//            public Fragment getItem(int position) {
+//                //从集合中获取对应位置的Fragment
+//                return fragments.get(position);
+//            }
+//
+//            @Override
+//            public int getCount() {
+//                //获取集合中Fragment的总数
+//                return fragments.size();
+//
+//            }
+//
+//
+//        };
         //设置ViewPager的适配器
         viewPager.setAdapter(fragAdapter);
         //设置ViewPager的切换监听
@@ -261,13 +330,13 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
         //根据点击的Tab设置对应的ImageButton为绿色
         switch (i) {
             case 0:
-                buttonConsumables.setImageResource(R.mipmap.currten);
+                buttonConsumables.setAlpha((float)0.99);
                 break;
             case 1:
-                buttonEquipments.setImageResource(R.mipmap.currten);
+                buttonEquipments.setAlpha((float)0.99);
                 break;
             case 2:
-                buttonPieces.setImageResource(R.mipmap.currten);
+                buttonPieces.setAlpha((float)0.99);
                 break;
             default:
                 break;
@@ -306,7 +375,10 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
 
         FragPieces fragPieces=(FragPieces) fragments.get(2);
         fragPieces.reset(p_pieces,g_pieces);
+
+        fragAdapter.notifyDataSetChanged();
     }
+
     private void reOrder(){
         new Thread(){
             public void run(){
@@ -324,16 +396,16 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
                     g_consumables=(ArrayList<Goods>) JSONArraytoGoodsList(json.getJSONArray("g_consumables"));
                     g_equipments=(ArrayList<Goods>) JSONArraytoGoodsList(json.getJSONArray("g_equipments"));
                     g_pieces=(ArrayList<Goods>) JSONArraytoGoodsList(json.getJSONArray("g_pieces"));
+                    System.out.println("web request done :"+p_consumables);
+
+                    msg.what=2;
+                    progressHandler.sendMessage(msg);
 
                 }catch (Exception e){
                     Log.i("Exception",e.toString());
                 }
             }
         }.start();
-
-        Message msg=new Message();
-        msg.what=2;
-        progressHandler.sendMessage(msg);
 
     }
     //处理点击事件
@@ -356,6 +428,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
                 back();
                 break;
             case R.id.reOrder:
+                reOrder();
                 break;
             default:
                 break;

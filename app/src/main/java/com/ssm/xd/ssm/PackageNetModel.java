@@ -50,9 +50,7 @@ public class PackageNetModel {
             if (entity != null)
             {
                 String contentString = EntityUtils.toString(entity);
-                Log.i("tag", contentString);
                 json = new JSONObject(contentString);
-                System.out.println("JSON -- p_consumables  "+json.getJSONArray("p_consumables").toString());
             }
         }catch (Exception e){
             Log.i("Exception",e.toString());
@@ -90,9 +88,7 @@ public class PackageNetModel {
             if (entity != null)
             {
                 String contentString = EntityUtils.toString(entity);
-                Log.i("tag", contentString);
                 json = new JSONObject(contentString);
-                System.out.println("JSON -- p_consumables  "+json.getJSONArray("p_consumables").toString());
             }
         }catch (Exception e){
             Log.i("Exception",e.toString());
@@ -131,9 +127,7 @@ public class PackageNetModel {
             if (entity != null)
             {
                 String contentString = EntityUtils.toString(entity);
-                Log.i("tag", contentString);
                 json = new JSONObject(contentString);
-                System.out.println("JSON -- p_consumables  "+json.getJSONArray("p_consumables").toString());
             }
         }catch (Exception e){
             Log.i("Exception",e.toString());
@@ -173,9 +167,7 @@ public class PackageNetModel {
             if (entity != null)
             {
                 String contentString = EntityUtils.toString(entity);
-                Log.i("tag", contentString);
                 json = new JSONObject(contentString);
-                System.out.println("JSON -- p_equipments  "+json.getJSONArray("p_equipments").toString());
             }
         }catch (Exception e){
             Log.i("Exception",e.toString());
@@ -215,9 +207,7 @@ public class PackageNetModel {
             if (entity != null)
             {
                 String contentString = EntityUtils.toString(entity);
-                Log.i("tag", contentString);
                 json = new JSONObject(contentString);
-                System.out.println("JSON -- p_pieces  "+json.getJSONArray("p_pieces").toString());
             }
         }catch (Exception e){
             Log.i("Exception",e.toString());

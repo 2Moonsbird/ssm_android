@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:background="#708090"
+    android:background="#90000000"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -18,7 +18,7 @@
             android:clickable="false"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:src="@mipmap/ic_launcher"
+            android:src="@mipmap/consumable"
             android:background="#00000000"/>
         <TextView
             android:layout_width="wrap_content"
@@ -40,7 +40,7 @@
             android:clickable="false"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:src="@mipmap/ic_launcher"
+            android:src="@mipmap/equipment"
             android:background="#00000000"/>
         <TextView
             android:layout_width="wrap_content"
@@ -61,7 +61,7 @@
             android:clickable="false"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:src="@mipmap/ic_launcher"
+            android:src="@mipmap/piece"
             android:background="#00000000"/>
         <TextView
             android:layout_width="wrap_content"

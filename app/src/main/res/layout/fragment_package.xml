@@ -3,10 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
-    tools:context=".FragEquipments">
-
+    tools:context=".FragConsumables">
     <GridView
-        android:id="@+id/grid_consumables"
+        android:id="@+id/grid_package"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
@@ -17,5 +16,4 @@
         android:verticalSpacing="5dp"
         android:stretchMode="columnWidth">
     </GridView>
-
 </LinearLayout>

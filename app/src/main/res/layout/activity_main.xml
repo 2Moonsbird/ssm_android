@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@mipmap/ic_launcher"
+    android:background="@mipmap/package_back"
     tools:context="com.ssm.xd.ssm.MainActivity">
 
     <LinearLayout
@@ -17,14 +17,16 @@
             android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="返回" />
+            android:layout_weight="1"
+            android:text="返回"
+            android:textColor="#FAF0E6"
+            android:background="#90000000"/>
         <TextView
             android:id="@+id/textViewPackage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="背包"
-            android:layout_weight="1"
+            android:layout_weight="8"
             android:gravity="center_horizontal"
             android:background="@color/material_blue_grey_800"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
@@ -32,8 +34,10 @@
             android:id="@+id/reOrder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="重新排序" />
+            android:layout_weight="1"
+            android:text="重新排序"
+            android:textColor="#FAF0E6"
+            android:background="#90000000"/>
     </LinearLayout>
 
     <include layout="@layout/package_top"/>
