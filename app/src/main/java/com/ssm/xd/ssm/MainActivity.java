@@ -41,9 +41,10 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
     private ImageButton buttonConsumables;
     private ImageButton buttonPieces;
 
-    //声明重新排序和返回按键
+    //声明重新排序和返回按键、切换到聊天
     private Button buttonBack;
     private Button buttonreOrder;
+    private Button buttontoChat;
 
     private Intent intent;
     private ViewPager viewPager;
@@ -112,27 +113,27 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-//得到缓存的fragment
+            //得到缓存的fragment
             Fragment fragment = (Fragment) super.instantiateItem(container,
                     position);
-//得到tag，这点很重要
+            //得到tag，这点很重要
             String fragmentTag = fragment.getTag();
 
 
             if (fragmentsUpdateFlag[position % fragmentsUpdateFlag.length]) {
-//如果这个fragment需要更新
+            //如果这个fragment需要更新
 
                 FragmentTransaction ft = fm.beginTransaction();
-//移除旧的fragment
+                //移除旧的fragment
                 ft.remove(fragment);
-//换成新的fragment
+                //换成新的fragment
                 fragment = fragments.get(position % fragments.size());
-//添加新fragment时必须用前面获得的tag，这点很重要
+                //添加新fragment时必须用前面获得的tag，这点很重要
                 ft.add(container.getId(), fragment, fragmentTag);
                 ft.attach(fragment);
                 ft.commit();
 
-//复位更新标志
+                //复位更新标志
                 fragmentsUpdateFlag[position % fragmentsUpdateFlag.length]= false;
             }
 
@@ -153,6 +154,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
         initData();
         initViews();
         initEvents();
+        initButtons();
 
         selectTab(0);//默认打开页面
     }
@@ -249,8 +251,9 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
         buttonEquipments=(ImageButton)findViewById(R.id.tab_equipments_but);
         buttonPieces=(ImageButton)findViewById(R.id.tab_pieces_but);
 
-        buttonBack=(Button)findViewById(R.id.back);
+        buttonBack=(Button)findViewById(R.id.back_package);
         buttonreOrder=(Button)findViewById(R.id.reOrder);
+        buttontoChat=(Button)findViewById(R.id.tochat);
 
         viewPager=(ViewPager)findViewById(R.id.package_viewpager);
     }
@@ -263,6 +266,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
 
         buttonBack.setOnClickListener(this);
         buttonreOrder.setOnClickListener(this);
+        buttontoChat.setOnClickListener(this);
     }
 
     //初始化按钮，将3个ImageButton置为灰色
@@ -283,22 +287,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
     //初始化适配器
     private void initAdapter(){
         fragAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
-//                (getSupportFragmentManager()) {
-//            @Override
-//            public Fragment getItem(int position) {
-//                //从集合中获取对应位置的Fragment
-//                return fragments.get(position);
-//            }
-//
-//            @Override
-//            public int getCount() {
-//                //获取集合中Fragment的总数
-//                return fragments.size();
-//
-//            }
-//
-//
-//        };
         //设置ViewPager的适配器
         viewPager.setAdapter(fragAdapter);
         //设置ViewPager的切换监听
@@ -408,27 +396,42 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
         }.start();
 
     }
+
+    //切换到Chat
+    private void toChat(){
+        Intent intent=new Intent();
+        intent.setClass(MainActivity.this,Main2Activity.class);
+        startActivity(intent);
+        MainActivity.this.finish();
+    }
     //处理点击事件
     @Override
     public void onClick(View v) {
-        //先将3个ImageButton置为灰色
-        initButtons();
         switch (v.getId())
         {
             case R.id.tab_consumables:
+                //先将3个tab置为半透明
+                initButtons();
                 selectTab(0);
                 break;
             case R.id.tab_equipments:
+                //先将3个tab置为半透明
+                initButtons();
                 selectTab(1);
                 break;
             case R.id.tab_pieces:
+                //先将3个tab置为半透明
+                initButtons();
                 selectTab(2);
                 break;
-            case R.id.back:
+            case R.id.back_package:
                 back();
                 break;
             case R.id.reOrder:
                 reOrder();
+                break;
+            case R.id.tochat:
+                toChat();
                 break;
             default:
                 break;

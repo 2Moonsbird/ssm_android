@@ -90,8 +90,12 @@ public class FragPieces extends Fragment  implements OnItemClickListener {
 
                                     //这个方法中包含对HttpResponse的初始化必须在线程中进行
                                     JSONObject json = model.pieceTogetherJSON(user_id, position, serverConfiguration.pieceTogetherURL);
-                                    records = (ArrayList<Package>) MainActivity.JSONArraytoPackageList(json.getJSONArray("p_pieces"));
-                                    goods = (ArrayList<Goods>) MainActivity.JSONArraytoGoodsList(json.getJSONArray("g_pieces"));
+
+                                    //避免挪动对象的地址，使notifyDataSetChanged失效
+                                    records.clear();
+                                    goods.clear();
+                                    records.addAll ((ArrayList<Package>) MainActivity.JSONArraytoPackageList(json.getJSONArray("p_pieces")));
+                                    goods.addAll((ArrayList<Goods>) MainActivity.JSONArraytoGoodsList(json.getJSONArray("g_pieces")));
 
                                     Message msg = new Message();
                                     msg.what = 1;
@@ -118,7 +122,6 @@ public class FragPieces extends Fragment  implements OnItemClickListener {
         String message = new String();
         message = message + "合成所需数量：" + goods.get(position).getGoodsAttr() + "\n";
         message = message + "详细介绍:" + goods.get(position).getGoodsIntro() + "\n";
-        message = message + "package :" + records.get(position).toString() + goods.get(position).toString();
         this.position = position;
         showPiecesDialog(goods.get(position).getGoodsName(), message);
     }

@@ -40,11 +40,11 @@ public class GridAdapter extends BaseAdapter {
     @Override public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if(convertView == null){
-            convertView = LayoutInflater.from(context).inflate(R.layout.grid_item, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.grid_package_item, parent, false);
             holder = new ViewHolder();
-            holder.img = (ImageView) convertView.findViewById(R.id.grid_item_img);
-            holder.txt_name=(TextView) convertView.findViewById(R.id.grid_item_name);
-            holder.txt_num = (TextView) convertView.findViewById(R.id.grid_item_num);
+            holder.img = (ImageView) convertView.findViewById(R.id.grid_package_item_img);
+            holder.txt_name=(TextView) convertView.findViewById(R.id.grid_item_package_name);
+            holder.txt_num = (TextView) convertView.findViewById(R.id.grid_package_item_num);
             convertView.setTag(holder);
         }
         else{

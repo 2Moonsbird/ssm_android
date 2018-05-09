@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:gravity="center">
         <Button
-            android:id="@+id/back"
+            android:id="@+id/back_package"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -25,19 +25,20 @@
             android:id="@+id/textViewPackage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="背包"
+            android:text="仓库"
             android:layout_weight="8"
             android:gravity="center_horizontal"
             android:background="@color/material_blue_grey_800"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
         <Button
-            android:id="@+id/reOrder"
+            android:id="@+id/tochat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="重新排序"
+            android:text="-->聊天"
             android:textColor="#FAF0E6"
             android:background="#90000000"/>
+
     </LinearLayout>
 
     <include layout="@layout/package_top"/>

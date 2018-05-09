@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@mipmap/package_back"
+    tools:context="com.ssm.xd.ssm.Main2Activity">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <Button
+            android:id="@+id/back_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="返回"
+            android:textColor="#FAF0E6"
+            android:background="#90000000"/>
+        <TextView
+            android:id="@+id/textViewChat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="聊天"
+            android:layout_weight="8"
+            android:gravity="center_horizontal"
+            android:background="@color/material_blue_grey_800"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+        <Button
+            android:id="@+id/topackage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="-->仓库"
+            android:textColor="#FAF0E6"
+            android:background="#90000000"/>
+
+    </LinearLayout>
+
+    <include layout="@layout/chat_top"/>
+
+    <FrameLayout
+        android:id="@+id/id_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+    </FrameLayout>
+
+</LinearLayout>

@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml:2:1-24:12
-INJECTED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml:2:1-24:12
-INJECTED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml:2:1-24:12
-INJECTED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml:2:1-24:12
+ADDED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml:2:1-25:12
+INJECTED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml:2:1-25:12
+INJECTED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml:2:1-25:12
+INJECTED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml:2:1-25:12
 MERGED from [com.android.support:design:26.1.0] /home/xd/.gradle/caches/transforms-1/files-1.1/design-26.1.0.aar/e483e5be3fe40dbb5089e7c673366c6c/AndroidManifest.xml:17:1-31:12
 MERGED from [com.android.support:appcompat-v7:26.1.0] /home/xd/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/ce308545a618d157a5eacfb6bf35e285/AndroidManifest.xml:17:1-31:12
 MERGED from [com.android.support.constraint:constraint-layout:1.1.0] /home/xd/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.0.aar/1a48ba86d02da806af3a64be0ce35d67/AndroidManifest.xml:2:1-11:12
@@ -23,20 +23,20 @@ MERGED from [com.android.support:support-core-utils:26.1.0] /home/xd/.gradle/cac
 MERGED from [com.android.support:support-core-ui:26.1.0] /home/xd/.gradle/caches/transforms-1/files-1.1/support-core-ui-26.1.0.aar/bc30764f872c50b7ccd7de9b1e9595a4/AndroidManifest.xml:17:1-31:12
 MERGED from [com.android.support:support-compat:26.1.0] /home/xd/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/2f8d95ac960f73879fec61df08d39eac/AndroidManifest.xml:17:1-31:12
 MERGED from [android.arch.lifecycle:runtime:1.0.0] /home/xd/.gradle/caches/transforms-1/files-1.1/runtime-1.0.0.aar/97ca1a8b9a13480fb9b0762d9a597e04/AndroidManifest.xml:17:1-30:12
-INJECTED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml:2:1-24:12
-INJECTED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml:2:1-24:12
-INJECTED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml:2:1-24:12
+INJECTED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml:2:1-25:12
+INJECTED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml:2:1-25:12
+INJECTED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml:2:1-25:12
 	package
 		ADDED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml:3:5-29
 		INJECTED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml
 		INJECTED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml
 	android:versionName
 		INJECTED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml
-		ADDED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml:2:1-24:12
+		ADDED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml:2:1-25:12
 		INJECTED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml
 	android:versionCode
 		INJECTED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml
-		ADDED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml:2:1-24:12
+		ADDED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml:2:1-25:12
 		INJECTED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml
 	xmlns:android
 		ADDED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml:2:11-69
@@ -45,7 +45,7 @@ ADDED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml:6
 	android:name
 		ADDED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml:6:22-64
 application
-ADDED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml:8:5-22:19
+ADDED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml:8:5-23:19
 MERGED from [com.android.support:design:26.1.0] /home/xd/.gradle/caches/transforms-1/files-1.1/design-26.1.0.aar/e483e5be3fe40dbb5089e7c673366c6c/AndroidManifest.xml:25:5-29:19
 MERGED from [com.android.support:design:26.1.0] /home/xd/.gradle/caches/transforms-1/files-1.1/design-26.1.0.aar/e483e5be3fe40dbb5089e7c673366c6c/AndroidManifest.xml:25:5-29:19
 MERGED from [com.android.support:appcompat-v7:26.1.0] /home/xd/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/ce308545a618d157a5eacfb6bf35e285/AndroidManifest.xml:25:5-29:19
@@ -110,6 +110,10 @@ category#android.intent.category.LAUNCHER
 ADDED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml:19:17-77
 	android:name
 		ADDED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml:19:27-74
+activity#com.ssm.xd.ssm.Main2Activity
+ADDED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml:22:9-60
+	android:name
+		ADDED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml:22:19-48
 uses-sdk
 INJECTED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /home/xd/AndroidStudioProjects/ssm/app/src/main/AndroidManifest.xml
