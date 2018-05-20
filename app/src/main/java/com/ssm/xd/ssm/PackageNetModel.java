@@ -216,4 +216,43 @@ public class PackageNetModel {
         httpClient.getConnectionManager().shutdown();
         return json;
     }
+
+    //获取公共聊天记录
+    public JSONObject getWorldJSON(int user_id,String url) {
+        JSONObject json = null;
+        HttpClient httpClient = new DefaultHttpClient();
+        List<NameValuePair> qparams = new ArrayList<>();
+
+        qparams.add(new BasicNameValuePair("user_id", String.valueOf(user_id)));
+
+        try{
+            URI uri = URIUtils.createURI("http", serverConfiguration.IP,
+                    serverConfiguration.PORT,
+                    url,
+                    URLEncodedUtils.format(qparams, "UTF-8"),
+                    null);
+
+            HttpGet httpget = new HttpGet(uri);
+
+
+            //这个方法中包含对HttpResponse的初始化必须在线程中进行
+            HttpResponse response = httpClient.execute(httpget);
+
+            HttpEntity entity = response.getEntity();
+
+
+            Log.i("tag", "uri:"+uri.toString());
+
+            if (entity != null)
+            {
+                String contentString = EntityUtils.toString(entity);
+                json = new JSONObject(contentString);
+            }
+        }catch (Exception e){
+            Log.i("Exception",e.toString());
+        }
+
+        httpClient.getConnectionManager().shutdown();
+        return json;
+    }
 }

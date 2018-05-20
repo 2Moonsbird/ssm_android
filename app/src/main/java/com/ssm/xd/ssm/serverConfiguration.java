@@ -12,4 +12,6 @@ public class serverConfiguration {
     public static final String pieceTogetherURL="maven-ssm/package/pieceTogether.json";
     public static final String applyURL="maven-ssm/package/apply.json";
     public static final String equipURL="maven-ssm/package/equip.json";
+
+    public static final String getWorldURL="maven-ssm/chat/getWorld.json";
 }

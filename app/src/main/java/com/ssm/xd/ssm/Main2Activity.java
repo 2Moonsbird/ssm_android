@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.util.AndroidRuntimeException;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,6 +25,7 @@ import org.json.JSONArray;
 
 import android.os.Handler;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class Main2Activity extends FragmentActivity implements OnClickListener{
@@ -46,6 +48,7 @@ public class Main2Activity extends FragmentActivity implements OnClickListener{
     private Intent intent=new Intent();
 
     int user_id=0;
+    private ArrayList<Chat> world_records;
 
 
     @Override
@@ -91,26 +94,26 @@ public class Main2Activity extends FragmentActivity implements OnClickListener{
         return list;
     }
 
-    //JSONArray转ArrayList<Goods>
-    public static ArrayList<Goods> JSONArraytoGoodsList(JSONArray array){
-        ArrayList<Goods> list = new ArrayList<>();
+    //JSONArray转ArrayList<Chat>
+    public static ArrayList<Chat> JSONArraytoChatList(JSONArray array){
+        ArrayList<Chat> list = new ArrayList<>();
         JSONObject jsonObject;
 
         if (array==null) {
             return list;//nerver return null
         }
         for (int i=0;i<array.length();i++) {
-            Goods newGoods=new Goods();
+            Chat newChat=new Chat();
             try{
                 jsonObject=array.getJSONObject(i);
 
-                newGoods.setId((Integer) jsonObject.get("id"));
-                newGoods.setGoodsAttr((Integer) jsonObject.get("goodsAttr"));
-                newGoods.setGoodsIntro((String) jsonObject.get("goodsIntro"));
-                newGoods.setGoodsName((String) jsonObject.get("goodsName"));
-                newGoods.setGoodsType((String) jsonObject.get("goodsType"));
+                newChat.setId((Integer) jsonObject.get("id"));
+                newChat.setSendId((Integer)jsonObject.get("sendId"));
+                newChat.setReceiveId((Integer)jsonObject.get("receiveId"));
+                newChat.setTime((Timestamp)jsonObject.get("time"));
+                newChat.setContent((String)jsonObject.get("content"));
 
-                list.add(newGoods);
+                list.add(newChat);
             }catch (Exception e){
                 Log.i("JSONArraytoList ERROR",e.toString());
             }
@@ -128,8 +131,9 @@ public class Main2Activity extends FragmentActivity implements OnClickListener{
                 PackageNetModel model=new PackageNetModel();
                 try {
                     //这个方法中包含对HttpResponse的初始化必须在线程中进行
-                    JSONObject json=model.getIndexJSON(user_id,serverConfiguration.indexURL);
+                    JSONObject json=model.getWorldJSON(user_id,serverConfiguration.getWorldURL);
 
+                    world_records=(ArrayList<Chat>) JSONArraytoChatList(json.getJSONArray("world_records"));
 
                 }catch (Exception e){
                     Log.i("Exception",e.toString());
@@ -178,7 +182,7 @@ public class Main2Activity extends FragmentActivity implements OnClickListener{
             case 0:
                 tabWorld.setAlpha((float)0.99);
                 if (fragWorld == null) {
-                    fragWorld = FragWorld.newInstance("try","try");
+                    fragWorld = FragWorld.newInstance(world_records,user_id);
                     transaction.add(R.id.id_content, fragWorld);
                 } else {
                     transaction.show(fragWorld);

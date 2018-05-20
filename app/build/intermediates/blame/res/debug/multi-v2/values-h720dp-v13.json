@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/xd/AndroidStudioProjects/ssm/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-h720dp-v13/values-h720dp-v13.xml",
+            "outputFile": "E:\\program\\Android\\ssm_android\\ssm_android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-h720dp-v13\\values-h720dp-v13.xml",
             "map": [
                 {
-                    "source": "/home/xd/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/ce308545a618d157a5eacfb6bf35e285/res/values-h720dp-v13/values-h720dp-v13.xml",
+                    "source": "C:\\Users\\Moonbird\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\cef9354016ccec6fbbc420ab1194dd33\\res\\values-h720dp-v13\\values-h720dp-v13.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

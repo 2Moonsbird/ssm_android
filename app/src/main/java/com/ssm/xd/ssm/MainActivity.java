@@ -315,7 +315,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
     }
 
     private void selectTab(int i) {
-        //根据点击的Tab设置对应的ImageButton为绿色
+        //根据点击的Tab设置对应的ImageButton为半透明
         switch (i) {
             case 0:
                 buttonConsumables.setAlpha((float)0.99);
