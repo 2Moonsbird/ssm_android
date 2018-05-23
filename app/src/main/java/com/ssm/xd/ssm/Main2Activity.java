@@ -49,6 +49,25 @@ public class Main2Activity extends FragmentActivity implements OnClickListener{
 
     int user_id=0;
     private ArrayList<Chat> world_records;
+    private ArrayList<User> world_senders;
+
+
+    public Handler progressHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg){
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 1:
+                    selectTab(0);//默认打开页面
+                    break;
+                case 2:
+                    initData();
+                default:
+                    break;
+            }
+        }
+    };
+
 
 
     @Override
@@ -59,34 +78,39 @@ public class Main2Activity extends FragmentActivity implements OnClickListener{
         intent=getIntent();
 
         //通过Handeler控制，先初始化数据再初始化fragment
-        //initData();
+        initData();
 
         initViews();
         initEvents();
         initButtons();
 
-        selectTab(0);//默认打开页面
     }
 
     //JSONArray转ArrayList<Package>
-    public static ArrayList<Package> JSONArraytoPackageList(JSONArray array){
-        ArrayList<Package> list = new ArrayList<>();
+    public static ArrayList<User> JSONArraytoUserList(JSONArray array){
+        ArrayList<User> list = new ArrayList<>();
         JSONObject jsonObject;
 
         if (array==null) {
             return list;//nerver return null
         }
         for (int i=0;i<array.length();i++) {
-            Package newPackage=new Package();
+            User newUser=new User();
             try{
                 jsonObject=array.getJSONObject(i);
 
-                newPackage.setGoodsId((Integer) jsonObject.get("goodsId"));
-                newPackage.setPackageId((Integer)jsonObject.get("packageId"));
-                newPackage.setGoodsNum((Integer)jsonObject.get("goodsNum"));
-                newPackage.setUserId((Integer)jsonObject.get("userId"));
+                newUser.setId((Integer)jsonObject.get("id"));
+                newUser.setdTactics((Integer)jsonObject.get("dTactics"));
+                newUser.setFriendsNum((Integer)jsonObject.get("friendsNum"));
+                newUser.setMoney((Integer)jsonObject.get("money"));
+                newUser.setoTactics((Integer)jsonObject.get("oTactics"));
+                newUser.setPackageNum((Integer)jsonObject.get("packageNum"));
+                newUser.setPower((Integer)jsonObject.get("power"));
+                newUser.setSetting((Integer)jsonObject.get("setting"));
+                newUser.setUserinfo((Integer)jsonObject.get("userinfo"));
+                newUser.setUserName((String)jsonObject.get("userName"));
 
-                list.add(newPackage);
+                list.add(newUser);
             }catch (Exception e){
                 Log.i("JSONArraytoList ERROR",e.toString());
             }
@@ -110,7 +134,9 @@ public class Main2Activity extends FragmentActivity implements OnClickListener{
                 newChat.setId((Integer) jsonObject.get("id"));
                 newChat.setSendId((Integer)jsonObject.get("sendId"));
                 newChat.setReceiveId((Integer)jsonObject.get("receiveId"));
-                newChat.setTime((Timestamp)jsonObject.get("time"));
+                JSONObject time=jsonObject.getJSONObject("time");
+                Long timestamp=time.getLong("time");
+                newChat.setTime(new Timestamp(timestamp));
                 newChat.setContent((String)jsonObject.get("content"));
 
                 list.add(newChat);
@@ -134,10 +160,14 @@ public class Main2Activity extends FragmentActivity implements OnClickListener{
                     JSONObject json=model.getWorldJSON(user_id,serverConfiguration.getWorldURL);
 
                     world_records=(ArrayList<Chat>) JSONArraytoChatList(json.getJSONArray("world_records"));
+                    world_senders=(ArrayList<User>)JSONArraytoUserList(json.getJSONArray("world_senders"));
 
                 }catch (Exception e){
                     Log.i("Exception",e.toString());
                 }
+
+                msg.what=1;
+                progressHandler.sendMessage(msg);
 
             }
         }.start();
@@ -182,7 +212,7 @@ public class Main2Activity extends FragmentActivity implements OnClickListener{
             case 0:
                 tabWorld.setAlpha((float)0.99);
                 if (fragWorld == null) {
-                    fragWorld = FragWorld.newInstance(world_records,user_id);
+                    fragWorld = FragWorld.newInstance(world_senders,world_records,user_id);
                     transaction.add(R.id.id_content, fragWorld);
                 } else {
                     transaction.show(fragWorld);

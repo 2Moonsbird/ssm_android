@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "E:\\program\\Android\\ssm_android\\ssm_android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v23\\values-v23.xml",
+            "outputFile": "/home/xd/AndroidStudioProjects/ssm/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v23/values-v23.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Moonbird\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\cef9354016ccec6fbbc420ab1194dd33\\res\\values-v23\\values-v23.xml",
+                    "source": "/home/xd/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/ce308545a618d157a5eacfb6bf35e285/res/values-v23/values-v23.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,19,32,33,34,35,36",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4",

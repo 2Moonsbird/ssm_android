@@ -9,105 +9,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <GridView
+            android:id="@+id/grid_world"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="5"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <ImageView
-                    android:id="@+id/grid_chat_world_item_img"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@mipmap/ironman"
-                    />
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">>
-                    <TextView
-                        android:id="@+id/grid_chat_world_item_name"
-                        android:textColor="#FAF0E6"
-                        android:text="Tony"
-                        android:textSize="14sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
-                    <TextView
-                        android:id="@+id/grid_chat_world_item_message"
-                        android:textColor="#696969"
-                        android:textSize="10sp"
-                        android:text="求900分以上好友"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
-                </LinearLayout>
-            </LinearLayout>
+            android:layout_height="match_parent">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@mipmap/thunder"
-                    />
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-                    <TextView
-                        android:textColor="#FAF0E6"
-                        android:text="阿斯加德继承人"
-                        android:textSize="14sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
-                    <TextView
-                        android:textColor="#696969"
-                        android:textSize="10sp"
-                        android:text="哇膜拜大佬"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@mipmap/shield"
-                    />
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-                    <TextView
-                        android:textColor="#FAF0E6"
-                        android:text="盘子队长"
-                        android:textSize="14sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
-                    <TextView
-                        android:textColor="#696969"
-                        android:textSize="10sp"
-                        android:text="出来看上帝了"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
-                </LinearLayout>
-            </LinearLayout>
-
-        </LinearLayout>
+        </GridView>
 
         <LinearLayout
             android:layout_width="match_parent"
