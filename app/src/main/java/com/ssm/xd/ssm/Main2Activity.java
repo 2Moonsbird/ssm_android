@@ -50,6 +50,8 @@ public class Main2Activity extends FragmentActivity implements OnClickListener{
     int user_id=0;
     private ArrayList<Chat> world_records;
     private ArrayList<User> world_senders;
+    private ArrayList<Chat> friend_records=new ArrayList<>();
+    private ArrayList<User> friends=new ArrayList<>();
 
 
     public Handler progressHandler = new Handler(){
@@ -157,10 +159,12 @@ public class Main2Activity extends FragmentActivity implements OnClickListener{
                 PackageNetModel model=new PackageNetModel();
                 try {
                     //这个方法中包含对HttpResponse的初始化必须在线程中进行
-                    JSONObject json=model.getWorldJSON(user_id,serverConfiguration.getWorldURL);
+                    JSONObject json=model.getChatJSON(user_id,serverConfiguration.getChatURL);
 
                     world_records=(ArrayList<Chat>) JSONArraytoChatList(json.getJSONArray("world_records"));
                     world_senders=(ArrayList<User>)JSONArraytoUserList(json.getJSONArray("world_senders"));
+                    friends=(ArrayList<User>)JSONArraytoUserList(json.getJSONArray("friends"));
+                    friend_records=(ArrayList<Chat>) JSONArraytoChatList(json.getJSONArray("friend_records"));
 
                 }catch (Exception e){
                     Log.i("Exception",e.toString());
@@ -221,7 +225,7 @@ public class Main2Activity extends FragmentActivity implements OnClickListener{
             case 1:
                 tabFriend.setAlpha((float)0.99);
                 if (fragFriend == null) {
-                    fragFriend = FragFriend.newInstance("try","try");
+                    fragFriend = FragFriend.newInstance(friends,friend_records,user_id);
                     transaction.add(R.id.id_content, fragFriend);
                 } else {
                     transaction.show(fragFriend);

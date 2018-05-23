@@ -13,6 +13,10 @@ public class serverConfiguration {
     public static final String applyURL="maven-ssm/package/apply.json";
     public static final String equipURL="maven-ssm/package/equip.json";
 
+    public static final String getChatURL="maven-ssm/chat/getChat.json";
     public static final String getWorldURL="maven-ssm/chat/getWorld.json";
     public static final String sendWorldURL="maven-ssm/chat/sendWorld.json";
+    public static final String getFriendURL="maven-ssm/chat/getFriend.json";
+    public static final String indexFriendURL="maven-ssm/chat/indexFriend.json";
+    public static final String sendFriendURL="maven-ssm/chat/sendFriend.json";
 }
