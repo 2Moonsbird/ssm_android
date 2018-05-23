@@ -50,7 +50,7 @@ public class FragWorld extends Fragment implements OnItemClickListener,View.OnCl
                     send();
                     break;
                 case 2:
-
+                    reFresh();
                 default:
                     break;
             }
@@ -98,7 +98,6 @@ public class FragWorld extends Fragment implements OnItemClickListener,View.OnCl
         butSend.setOnClickListener(this);
     }
 
-
     @Override
     public void onItemClick (AdapterView<?> parent, View view, int position, long id){
         //点击item触发
@@ -130,15 +129,28 @@ public class FragWorld extends Fragment implements OnItemClickListener,View.OnCl
                 try {
                     //这个方法中包含对HttpResponse的初始化必须在线程中进行
                     JSONObject json=model.sendWorldJSON(user_id,message,serverConfiguration.sendWorldURL);
+                    records.clear();
+                    senders.clear();
+                    records.addAll((ArrayList<Chat>) Main2Activity.JSONArraytoChatList(json.getJSONArray("world_records")));
+                    senders.addAll((ArrayList<User>) Main2Activity.JSONArraytoUserList(json.getJSONArray("world_senders")));
 
                 }catch (Exception e){
                     Log.i("Exception",e.toString());
                 }
                 msg.what=2;
-                activityHandler.sendMessage(msg);
+                progressHandler.sendMessage(msg);
 
             }
         }.start();
+    }
+
+    private void reFresh() {
+        this.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
     //处理点击事件
