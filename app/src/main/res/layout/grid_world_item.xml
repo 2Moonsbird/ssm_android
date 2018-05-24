@@ -3,31 +3,72 @@
     android:id="@+id/grid_world_item"
     android:layout_width="match_parent"
     android:layout_height="40dp"
-    android:orientation="horizontal"
-    android:gravity="left"
+    android:orientation="vertical"
     android:background="#60000000">
 
-    <ImageView
-        android:id="@+id/world_chat_img"
-        android:layout_width="40dp"
-        android:layout_height="match_parent"
-        />
+    <LinearLayout
+        android:id="@+id/world_item_left"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_gravity="left">
+
+        <ImageView
+            android:id="@+id/world_chat_img_left"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/world_chat_sender_left"
+                android:textColor="#FAF0E6"
+                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/world_chat_content_left"
+                android:textColor="#DEB887"
+                android:textSize="12sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/world_chat_sender"
-            android:textColor="#FAF0E6"
-            android:textSize="16sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/world_chat_content"
-            android:textColor="#DEB887"
-            android:textSize="12sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        android:id="@+id/world_item_right"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_gravity="right">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/world_chat_sender_right"
+                android:textColor="#FAF0E6"
+                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/world_chat_content_right"
+                android:textColor="#DEB887"
+                android:textSize="12sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/world_chat_img_right"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            />
     </LinearLayout>
+
 </LinearLayout>

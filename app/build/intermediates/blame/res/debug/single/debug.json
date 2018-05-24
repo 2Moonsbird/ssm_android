@@ -16,6 +16,10 @@
         "source": "/home/xd/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/2f8d95ac960f73879fec61df08d39eac/res/drawable/notification_tile_bg.xml"
     },
     {
+        "merged": "/home/xd/AndroidStudioProjects/ssm/app/build/intermediates/res/merged/debug/mipmap-hdpi_chat_back.jpeg.flat",
+        "source": "/home/xd/AndroidStudioProjects/ssm/app/src/main/res/mipmap-hdpi/chat_back.jpeg"
+    },
+    {
         "merged": "/home/xd/AndroidStudioProjects/ssm/app/build/intermediates/res/merged/debug/mipmap-hdpi_ic_launcher_round.png.flat",
         "source": "/home/xd/AndroidStudioProjects/ssm/app/src/main/res/mipmap-hdpi/ic_launcher_round.png"
     },
@@ -92,12 +96,12 @@
         "source": "/home/xd/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/ce308545a618d157a5eacfb6bf35e285/res/drawable-mdpi-v4/abc_textfield_activated_mtrl_alpha.9.png"
     },
     {
-        "merged": "/home/xd/AndroidStudioProjects/ssm/app/build/intermediates/res/merged/debug/drawable-xhdpi-v4_googleg_standard_color_18.png.flat",
-        "source": "/home/xd/.gradle/caches/transforms-1/files-1.1/play-services-base-15.0.1.aar/8f1ddc83d515e85e0a62536f1ae40dcc/res/drawable-xhdpi-v4/googleg_standard_color_18.png"
-    },
-    {
         "merged": "/home/xd/AndroidStudioProjects/ssm/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4_abc_spinner_mtrl_am_alpha.9.png.flat",
         "source": "/home/xd/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/ce308545a618d157a5eacfb6bf35e285/res/drawable-xxxhdpi-v4/abc_spinner_mtrl_am_alpha.9.png"
+    },
+    {
+        "merged": "/home/xd/AndroidStudioProjects/ssm/app/build/intermediates/res/merged/debug/drawable-xhdpi-v4_googleg_standard_color_18.png.flat",
+        "source": "/home/xd/.gradle/caches/transforms-1/files-1.1/play-services-base-15.0.1.aar/8f1ddc83d515e85e0a62536f1ae40dcc/res/drawable-xhdpi-v4/googleg_standard_color_18.png"
     },
     {
         "merged": "/home/xd/AndroidStudioProjects/ssm/app/build/intermediates/res/merged/debug/color_abc_tint_switch_track.xml.flat",

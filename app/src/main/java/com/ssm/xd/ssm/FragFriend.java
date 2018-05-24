@@ -92,7 +92,7 @@ public class FragFriend extends Fragment implements AdapterView.OnItemClickListe
         listGridView.setOnItemClickListener(this);
 
         chatGridView=(GridView)view.findViewById(R.id.grid_friend_chat);
-        chatGridView.setAdapter(chatAdapter=new FriendChatAdapter(getContext(),records));
+        chatGridView.setAdapter(chatAdapter=new FriendChatAdapter(getContext(),records,user_id));
         chatGridView.setOnItemClickListener(this);
 
         butSend=(Button)view.findViewById(R.id.send_friend);
@@ -187,7 +187,7 @@ public class FragFriend extends Fragment implements AdapterView.OnItemClickListe
     public void onClick(View v) {
         switch (v.getId())
         {
-            case R.id.send_world:
+            case R.id.send_friend:
                 message=editContent.getText().toString();
                 Message msg=new Message();
                 msg.what=1;

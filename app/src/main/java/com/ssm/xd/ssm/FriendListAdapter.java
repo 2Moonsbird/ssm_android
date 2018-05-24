@@ -50,7 +50,7 @@ public class FriendListAdapter extends BaseAdapter {
         }
         holder.img.setBackgroundResource(R.mipmap.thunder);
         holder.name.setText(friends.get(position).getUserName());
-        holder.power.setText(String.valueOf(friends.get(position).getPower()));
+        holder.power.setText("战力"+String.valueOf(friends.get(position).getPower()));
         return convertView;
     }
 

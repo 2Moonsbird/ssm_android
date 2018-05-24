@@ -83,7 +83,7 @@ public class FragWorld extends Fragment implements OnItemClickListener,View.OnCl
         view = inflater.inflate(R.layout.fragment_world, container, false);
 
         gridView=(GridView)view.findViewById(R.id.grid_world);
-        gridView.setAdapter(adapter=new WorldAdapter(getContext(),senders,records));
+        gridView.setAdapter(adapter=new WorldAdapter(getContext(),senders,records,user_id));
         gridView.setOnItemClickListener(this);
 
         butSend=(Button)view.findViewById(R.id.send_world);

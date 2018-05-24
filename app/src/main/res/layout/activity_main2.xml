@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@mipmap/package_back"
+    android:background="@mipmap/chat_back"
     tools:context="com.ssm.xd.ssm.Main2Activity">
 
     <LinearLayout

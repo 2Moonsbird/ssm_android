@@ -3,20 +3,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <TextView
-        android:id="@+id/grid_friend_chat_time"
+    <LinearLayout
+        android:id="@+id/friend_record_item_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="11:20"
-        android:textSize="8dp"
-        android:textColor="#696969"
-        android:layout_gravity="left"/>
-    <TextView
-        android:id="@+id/grid_friend_chat_content"
+        android:layout_gravity="left"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/grid_friend_chat_time_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="11:20"
+            android:textSize="8dp"
+            android:textColor="#696969"
+            android:layout_gravity="left"/>
+        <TextView
+            android:id="@+id/grid_friend_chat_content_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="今天战绩怎么样？"
+            android:textSize="10dp"
+            android:textColor="#DEB887"
+            android:layout_gravity="left"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/friend_record_item_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="今天战绩怎么样？"
-        android:textSize="10dp"
-        android:textColor="#DEB887"
-        android:layout_gravity="left"/>
+        android:orientation="vertical"
+        android:layout_gravity="right">
+        <TextView
+            android:id="@+id/grid_friend_chat_time_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="11:20"
+            android:textSize="8dp"
+            android:textColor="#696969"
+            android:layout_gravity="left"/>
+        <TextView
+            android:id="@+id/grid_friend_chat_content_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="今天战绩怎么样？"
+            android:textSize="10dp"
+            android:textColor="#DEB887"
+            android:layout_gravity="right"/>
+    </LinearLayout>
+
 </LinearLayout>
